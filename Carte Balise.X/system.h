@@ -22,12 +22,7 @@ extern "C" {
     #include <stdlib.h>
     #include <math.h>
     #include <stdbool.h>
-    #include "Uart.h"
-    #include "codeurs.h"
     #include "pwm.h"
-    #include "Config_robots.h"
-    #include "asserv.h"
-    #include "triangulation.h"
 
     
 /******************************************************************************/
@@ -93,7 +88,6 @@ extern "C" {
 /******************************* Interruptions  *******************************/
 /******************************************************************************/
 
-#define TENSION_MOTEUR      _TENSION_MOTEUR
 
 /******************************************************************************/
 /******************************* Interruptions  *******************************/
@@ -103,7 +97,7 @@ extern "C" {
 #define FRONT_INT1          FRONT_MONTANT
 #define FRONT_INT2          FRONT_MONTANT
     
-#define UTILISATION_INT_CAPTEUR
+//#define UTILISATION_INT_CAPTEUR
 //#define UTILISATION_INT_BOUTON1
 //#define UTILISATION_INT_BOUTON2
 //#define UTILISATION_INT_BOUTON3
@@ -136,7 +130,7 @@ extern "C" {
 #define ACTIV_INTER_UART2_TX            0   // UART BLE : type inter
 #define ACTIV_INTER_INT0                0   // INT0 : STATUS BL
 #define ACTIV_INTER_INT1                0   // INT1 : CAPTEUR
-#define ACTIV_INTER_INT2                1   // INT2 : BOUTON X
+#define ACTIV_INTER_INT2                0   // INT2 : BOUTON X
 #define ACTIV_INTER_I2C_MAITRE          0   // Pas implémenté pour le moment
 #define ACTIV_INTER_I2C_ESCLAVE         0   // Pas implémenté pour le moment
 #define ACTIV_INTER_QEI                 0   // CODEUR
@@ -158,12 +152,6 @@ extern "C" {
      * Uart, Timer, PWM, mapping ....
      */
     void init_system (void);
-
-
-    /**
-     * Fonction qui rèfle l'horloge à 80Mhz
-     */
-    void init_clock(void);
     
 
     /**
@@ -186,7 +174,6 @@ extern "C" {
     
     
     void config_timer_5ms();
-    void config_timer_debug();
 
     
 

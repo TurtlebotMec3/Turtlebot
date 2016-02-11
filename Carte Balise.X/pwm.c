@@ -26,39 +26,28 @@ void ConfigPWM (void)
 	//****************
 	//PWM
 	//****************
-	P1TCONbits.PTEN		= 1;		//PWM1 ON
-    P2TCONbits.PTEN     = 0;        //PWM2 OFF
+	P1TCONbits.PTEN		= 0;		//PWM1 OFF
+    P2TCONbits.PTEN     = 1;        //PWM2 ON
+    
+    P2TCONbits.PTSIDL   = 1;        //continu en idle
+    P2TCONbits.PTOPS    = 0;        //Postscaller 1 : 1
+    P2TCONbits.PTCKPS   = 1;        //Prescaller  1 : 4
 
-    P1TCONbits.PTSIDL   = 1;        //continu en idle
-    P1TCONbits.PTOPS    = 0;        //Postscaller 1 : 1
-    P1TCONbits.PTCKPS   = 0;        //Prescaller  1 : 1
+	P2TCONbits.PTMOD	= 0;		//Base de temps en free running mode (11 bits vmax = 2048)
 
-	P1TCONbits.PTMOD	= 0;		//Base de temps en free running mode (11 bits vmax = 2048)
-
-    P1TPER              = 1999;		//F=20kHz 11 bits
-
-	PWM1CON1bits.PMOD1	= 1;		//Mode indépendant             //Mode complementaire sur pwm1L1
-	PWM1CON1bits.PMOD2	= 1;		//Mode indépendant             //Mode complementaire sur pwm1L2
-    PWM1CON1bits.PMOD3  = 1;        //Mode indépendant         
-
-	PWM1CON1bits.PEN1L	= 1;		//PWM1L1 pour PWM moteur
-	PWM1CON1bits.PEN1H	= 0;		//PWM1H1 inactif => I/O
-#ifdef LED1_PWM
-	PWM1CON1bits.PEN2H	= 1;		//PWM1H2 pour LED1
-#else
-    PWM1CON1bits.PEN2H	= 0;		//PWM1H2 inactif => I/O 
-#endif
-	PWM1CON1bits.PEN2L	= 0;		//PWM1L2 inactif => I/O
-	PWM1CON1bits.PEN3H	= 0;		//PWM1H3 inactif => I/O
-	PWM1CON1bits.PEN3L	= 0;		//PWM1L3 inactif => I/O
-
+    P2TPER              = 18424;	//F=50Hz 15.6 bits
+ 
+    PWM2CON1bits.PMOD1 = 1;
+    
+    
 	PWM2CON1bits.PEN1H	= 0;		//PWM2H1 inactif => I/O
-	PWM2CON1bits.PEN1L	= 0;		//PWM2L1 inactif => I/O
+	PWM2CON1bits.PEN1L	= 1;		//PWM2L1 pour servo caméra
 
 
 	// Mise a zero des PWM
     PDC1 = 0;
     PDC2 = 0;
+    
 }
 
 
@@ -68,41 +57,27 @@ void ConfigPWM (void)
 
 void envoit_pwm (double valeur)
 {
-    double abs_valeur;
-
-    if (valeur < 0.)
-        abs_valeur = (double) (-valeur);
-    else
-      abs_valeur = (double) valeur;
-
-    abs_valeur *= PWM_VALEUR_MAX / 100;
-  
-    if (abs_valeur > PWM_VALEUR_MAX)
-        abs_valeur = PWM_VALEUR_MAX;
-
-    if (valeur < (double) 0.) //>
-    {
-       SENS_MOTEUR = AVANCER_MOTEUR;
-    }
-    else
-    {
-        SENS_MOTEUR = RECULER_MOTEUR;
-    } 
-
-    PDC1 = (uint16_t) abs_valeur;
-}
-
-void controle_LED1 (uint16_t pourcentage)
-{
-    if (pourcentage > 100)
-        pourcentage = 100;
+    if (valeur > 100)
+        valeur = 100;
+    else if (valeur < 100)
+        valeur = 0;
     
-    double ratio =  ( (double) pourcentage * (double) PWM_MAX_VALUE);
-    ratio /= 100.;
-    PDC2 = (uint16_t) ratio;
-    //PDC2 = (uint16_t) pourcentage;
+    //de 0 à 100%
+    //  50% = 1.5 ms
+    //   0% = 1.0 ms
+    // 100% = 2.0 ms  
+    valeur /= 100;
+    valeur += 1;
+    
+    //résulat en ms, maintenant conversion en valeur pwm
+    
+    valeur *= PWM_MAX_VALUE / 20;
+  
+    if (valeur > PWM_MAX_VALUE)
+        valeur = PWM_MAX_VALUE;
+    
+    P2DC1 = (uint16_t) valeur;
 }
-
 
 /******************************************************************************/
 /******************************************************************************/

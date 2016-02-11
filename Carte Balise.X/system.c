@@ -20,19 +20,12 @@
 
 void init_system (void)
 {
-    init_clock();
+    
     ConfigMapping ();
     ConfigPorts();
     ConfigInterrupt();
     ConfigPWM();
-    InitUART(UART_USB, 115200);
-    ConfigQEI ();
-    config_timer_5ms();
-    config_timer_debug();
-    
-    init_position_codeur();
-    init_flag();
-    init_capteur();
+    //config_timer_5ms();
 }
 
 
@@ -63,141 +56,6 @@ void config_timer_5ms()
     //TIMER_5ms = ACTIVE;
 }
 
-void config_timer_10ms() //Timer autom
-{
-    //Timer de 10,00105 ms
-
-    TIMER_10ms = DESACTIVE;
-    T4CONbits.TCS = 0;          //clock sur FCY
-    T4CONbits.T32 = 0;          //Timer 16 bits
-    T4CONbits.TGATE = 0;        //Mode Gate désactivé
-    T4CONbits.TCKPS = 0b11;     //Divise la fréquence par 256 (prescaler 1:256)
-    TMR4 = 0x00;                //Reset du timer
-
-    // FOSC = 80 MhZ, FCY = FOSC/2 = 40 MHz
-    // T = 0, 250 ns
-    // Presacler 1 : 256 => T = 6,4 µs
-    // 1563 * 6,4 µs = 10 ms
-    PR4 = 1563;                 //décompte de 10ms
-
-    //IPC6bits.T4IP = 0x03;       //priorité à 3 --> définit dans la table des interrupt
-    FLAG_TIMER_10ms = 0;        //Clear flag interrupt timer
-    IEC1bits.T4IE = 1;          //Enable Timer4 interrupt
-
-    //TIMER_10ms = ACTIVE;
-}
-
-
-void config_timer_debug() //int periode_ms
-{
-    TIMER_DEBUG = DESACTIVE;
-    T5CONbits.TCS = 0;          //clock sur FCY
-    T5CONbits.TGATE = 0;        //Mode Gate désactivé
-    T5CONbits.TCKPS = 0b11;     //Divise la fréquence par 256 (prescaler 1:256)
-    TMR4 = 0x00;                //Reset du timer
-
-    PR4 = 31256 ;                 //décompte de 200ms
-
-    //IPC6bits.T4IP = 0x03;       //priorité à 3 --> définit dans la table des interrupt
-    FLAG_TIMER_DEBUG = 0;        //Clear flag interrupt timer
-    IEC1bits.T5IE = 1;          //Enable Timer4 interrupt
-}
-
-void config_timer_90s()
-{
-    //Timer de 90,000 004 secondes
-
-    T3CONbits.TON = 0;          //On arrête le timer 3
-    T2CONbits.TON = 0;          //On arrête le Timer 2
-    T2CONbits.T32 = 1;          //On choisit un Timer 32 bits
-    T2CONbits.TCS = 0;          //On se synchro sur FCY = 40 MHz
-    T2CONbits.TGATE = 0;        //Desactive le mode Gate
-    T2CONbits.TCKPS = 0b11;     //Precaler = 1:256
-
-    TMR3 = 0x00;                //On remet le TIMER3 à 0
-    TMR2 = 0x00;                //On remet le Timer2 à 0
-
-//    //On décompte 14 065 514 pour faire 90 secondes
-//    PR3 = 0x00D6;               //adresse haute
-//    PR2 = 0x9F6A;               //adresse basse
-
-    // On décompte de 156 284 pour faire 0, 999 999 750 secondes
-    PR3 = 2;                        // adresse haute
-    PR2 = 25212;                    // adresse basse
-    //IPC2bits.T3IP = 0x01;       //Interruption sur ptiotité 1  -> définit dans la table des interrupt
-    FLAG_TIMER_90s = 0;         //On clear le flag du timer
-    IEC0bits.T3IE = 1;          //On enable l'interrup
-}
-
-/******************************************************************************/
-/********************************** Init Clock ********************************/
-/******************************************************************************/
-
-void init_clock(void)
-{
-//    //Tunage de la fréquence : Ftune = 8,0056625
-//    OSCTUNbits.TUN = 0;             //SEMBLE NE PAS FONCTIONNER ....
-//
-//    //New Osc = FRC sans PLL
-//    OSCCONbits.NOSC = 0b000;
-//    OSCCONbits.OSWEN = 1;
-//    while(OSCCONbits.OSWEN != 0);
-//
-//
-//
-//    // Configure PLL prescaler, PLL postscaler, PLL divisor
-//    // Fext = Fin * M / (N1 * N2)
-//    // F =  80,000 000 MHz
-//
-//    PLLFBDbits.PLLDIV = 20;//30;                // M = 32
-//    CLKDIVbits.PLLPRE= 0;       // N1 = 2
-//    CLKDIVbits.PLLPOST= 0b00;   // N2 = 2 
-// 
-//    CLKDIVbits.DOZE = 0b000;    // FCY = FOSC/2
-//    
-//    //On switch sur la nouvelle clock avec PLL
-//   
-//    OSCCONbits.CLKLOCK = 0;
-//    __builtin_write_OSCCONH(0x03);
-//    __builtin_write_OSCCONL(0x01);
-//    
-//    //OSCCONbits.NOSC = 0b011;
-//    //OSCCONbits.OSWEN = 1;
-//    while(OSCCONbits.OSWEN != 0);
-//    while(OSCCONbits.COSC != 0b011);
-//
-//    // Wait for PLL to lock
-//    while(OSCCONbits.LOCK!=1);
-    
-    
-    
-    //Tunage de la fréquence : Ftune = 8,0056625
-    OSCTUNbits.TUN = 0;        //SEMBLE NE PAS FONCTIONNER ....
-
-    //New Osc = FRC sans PLL
-    OSCCONbits.NOSC = 0b000;
-    OSCCONbits.OSWEN = 1;
-    while(OSCCONbits.OSWEN != 0);
-
-
-    // Configure PLL prescaler, PLL postscaler, PLL divisor
-    // Fext = Fin * M / (N1 * N2)
-    // F =  80,017 142 MHz
-
-    PLLFBD = 150;//150; // M = 152
-    CLKDIVbits.PLLPOST= 0;//0b00; // N2 = 2 
-    CLKDIVbits.PLLPRE= 5;//5; // N1 = 7
-
-    CLKDIVbits.DOZE = 0b000; //FRC = 1:1 FRC
-
-    //On switch sur la nouvelle clock avec PLL
-    OSCCONbits.NOSC = 0b001;
-    OSCCONbits.OSWEN = 1;
-    while(OSCCONbits.OSWEN != 0);
-
-    // Wait for PLL to lock
-    while(OSCCONbits.LOCK!=1);
-}
 
 /******************************************************************************/
 /************************ Mapping des pins de la carte ************************/
@@ -206,38 +64,10 @@ void init_clock(void)
 
 void ConfigMapping (void)
 {
-        // Mapping UART1 : USB
-	_U1RXR	= 0x0E;		// IN	: UART1 RX sur RP14
-	_RP13R	= 0x03;		// OUT	: UART1 TX sur RP13
-
-        // Mapping UART2 : BLUETOOTH
-	_U2RXR	= 0x09;         // IN	: UART2 RX sur RP9
-	_RP8R	= 0x05;         // OUT	: UART2 TX sur RP8
-
-        // Mapping QEI1 : Codeur 
-    _QEA1R	= 0x14;         // IN	: QEA1 sur RP20
-	_QEB1R	= 0x15;         // IN	: QEB1 sur RP21
-    
-       
-#ifdef UTILISATION_INT_CAPTEUR
-        // Mapping INT1 : Capteur sur RC1
-    _INT1R  = 0x11;         // IN   : INT1 Capteur sur RP17 
-#endif 
-    
         // Mapping possible de INT2 sur l'une des entrées de la carte 
 #ifdef UTILISATION_INT_BOUTON1
         // Mapping INT2 : BOUTON 1
     _INT2R  = 0x19;         // IN   : INT2 Bouton 1 sur RP25
-#else
-#ifdef UTILISATION_INT_BOUTON2
-        // Mapping INT2 : BOUTON 1
-    _INT2R  = 0x18;         // IN   : INT2 Bouton 2 sur RP24
-#else
-#ifdef UTILISATION_INT_BOUTON2
-        // Mapping INT2 : BOUTON 1
-    _INT2R  = 0x17;         // IN   : INT2 Bouton 3 sur RP23
-#endif 
-#endif 
 #endif 
     
 	// Temporisation
@@ -311,7 +141,7 @@ void ConfigPorts (void)
 	_TRISC4		= 1;	_CN25IE	= 0;	_CN25PUE	= 0;	// IN  : QEA
 	_TRISC5		= 1;	_CN26IE	= 0;	_CN26PUE	= 0;	// IN  : QEB
 	_TRISC6		= 0;	_CN18IE	= 0;	_CN18PUE	= 0;	// OUT : (DIGIT) : ENABLE BL
-	_TRISC7		= 1;	_CN17IE	= 0;	_CN17PUE	= 0;	// IN  : BOUTON3
+	_TRISC7		= 0;	_CN17IE	= 0;	_CN17PUE	= 0;	// OUT  : BOUTON3 = pwm servo
 	_TRISC8		= 1;	_CN20IE	= 0;	_CN20PUE	= 0;	// IN  : BOUTON2
 	_TRISC9		= 1;	_CN19IE	= 0;	_CN19PUE	= 0;	// IN  : BOUTON1
 

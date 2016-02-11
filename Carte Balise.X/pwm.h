@@ -20,22 +20,13 @@ extern "C" {
 /******************************** INCLUDES ************************************/
 /******************************************************************************/
 
-#include "Config_robots.h"
 
 
 /******************************************************************************/
 /***************************** Defines ****************************************/
 /******************************************************************************/
 
-#define PWM_MAX_VALUE           4000u
-
-#define TENSION_MOTEUR          _TENSION_MOTEUR
-#define TENSION_ALIM            _TENSION_ALIM
-
-#define PWM_VALEUR_MAX          (uint16_t) ( PWM_MAX_VALUE * TENSION_MOTEUR / TENSION_ALIM )
-
-#define AVANCER_MOTEUR          _AVANCER_MOTEUR
-#define RECULER_MOTEUR          _RECULER_MOTEUR
+#define PWM_MAX_VALUE           36850u
 
 /******************************************************************************/
 /****************************** Prototypes ************************************/

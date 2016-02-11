@@ -81,135 +81,39 @@ int main(int argc, char** argv)
     uint16_t i;
     uint16_t j=0.;
     init_system();
-    
-    
-    TIMER_5ms = ACTIVE;
-    //TIMER_DEBUG = ACTIVE;
-    //envoit_pwm(50);
-    
-    VITESSE.consigne = 200;
-    ENABLE_CAPTEUR = 1;
+    delay_ms(1000);
     
     while(1)
     {
-
-        static bool led = true;
-        static _coordonees c[3];
-        static double distance[3];
-        static bool premiere_fois = true;
-
-        capteur.indice = 0;
-        capteur.synchro_debut_tour = true;
-        //on attends d'avoir fait un tour complet
-        while(capteur.synchro_debut_tour == true);
-        while(capteur.tour_en_cours == true);
-
-        if (capteur.indice != 3)
+        
+        LED1 = 1;
+        envoit_pwm(0);
+        delay_ms(6000);
+        LED1 = 0;
+        envoit_pwm(100);
+        delay_ms(6000);
+        
+        
+        /*envoit_pwm(0);
+        LED1 = 0;
+        delay_ms(3000);
+        LED1 = 1;
+        envoit_pwm(100);
+        delay_ms(3000);*/
+        
+        
+        /*if (BOUTON1 == 1)
         {
-            PutsUART(UART_BLUETOOTH, "\n\nProbleme de detection de balises .... : ");
-            PutIntUART(UART_BLUETOOTH, (uint16_t) capteur.indice);
-            PutsUART(UART_BLUETOOTH, " Balises detectees \n\n\n\r");
+            LED1 = 0;
+            envoit_pwm(0);
         }
         else
         {
-            for (i = 0; i < 3 ; i++)
-                    capteur.angle[i] = obtention_angle(capteur.position[i]);
-
-            // On remet les angles dans l'ordre en fonction du n° de l'angle correspondant à la balise mère au derneir calcul
-            //inversion_balises(capteur.id_balise_mere);
-            
-            if (premiere_fois == true)
-            {
-                triangulation(&c[0], capteur.angle[0], capteur.angle[1], capteur.angle[2]);
-                capteur.c.x = c[0].x;
-                capteur.c.y = c[0].y;
-                premiere_fois = false;
-            }
-            else
-            {
-                triangulation(&c[0], capteur.angle[0], capteur.angle[1], capteur.angle[2]);
-                triangulation(&c[1], capteur.angle[1], capteur.angle[2], capteur.angle[0]);
-                triangulation(&c[2], capteur.angle[2], capteur.angle[0], capteur.angle[1]);
-
-                for (i = 0 ; i < 3 ; i++)
-                    distance[i] = get_distance(capteur.c, c[i]);
-
-                if (distance[0] < distance[1])
-                {
-                    if (distance[0] < distance[2])
-                    {
-                        capteur.c.x = c[0].x;
-                        capteur.c.y = c[0].y;
-                        // x[0] et y[0]
-                    }
-                    else
-                    {
-                        // x[2] et y [2]
-                        capteur.c.x = c[2].x;
-                        capteur.c.y = c[2].y;
-                    }
-                }
-                else if (distance[1] < distance[2])
-                {
-                    // x[1] et y[1]
-                    capteur.c.x = c[1].x;
-                    capteur.c.y = c[1].y;
-                }
-                else
-                {
-                    // x[2] y[2]
-                    capteur.c.x = c[2].x;
-                    capteur.c.y = c[2].y;
-                }
-
-            }
-            affichage_position();
-        }
+            LED1 = 1;
+            envoit_pwm(100);
+        }*/
     }
- 
     
-//    while (1)
-//    {
-//        LED9 = 0;
-//        LED1 = 1;
-//        delay_ms(1000);
-//        
-//        LED1 = 0;
-//        LED2 = 1;
-//        delay_ms(1000);
-//        
-//        LED2 = 0;
-//        LED3 = 1;
-//        delay_ms(1000);
-//        
-//        LED3 = 0;
-//        LED4 = 1;
-//        delay_ms(1000);
-//        
-//        LED4 = 0;
-//        LED5 = 1;
-//        delay_ms(1000);
-//        
-//        LED5 = 0;
-//        LED6 = 1;
-//        delay_ms(1000);
-//        
-//        LED6 = 0;
-//        LED7 = 1;
-//        delay_ms(1000);
-//        
-//        LED7 = 0;
-//        LED8 = 1;
-//        delay_ms(1000);
-//        
-//        LED8 = 0;
-//        LED9 = 1;
-//        delay_ms(1000);
-//    }
-
-    delay_ms(500);
-
-
     while(1);
     return (EXIT_SUCCESS);
 }

@@ -4,7 +4,6 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <itemPath>Config_robots.h</itemPath>
       <itemPath>system.h</itemPath>
       <itemPath>interruptions.h</itemPath>
       <itemPath>pwm.h</itemPath>
