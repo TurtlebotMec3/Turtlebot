@@ -36,7 +36,7 @@ extern "C" {
 
 
     //Macro pour les tempos
-#define FOSC        80000000LL     //80017142LL      //80000000
+#define FOSC        7370000LL     //80017142LL      //80000000
 #define FCY             (FOSC/2)
 #define delay_us(x) __delay32(((x*FCY)/1000000L))   // delays x us
 #define delay_ms(x) __delay32(((x*FCY)/1000L))      // delays x ms
@@ -109,52 +109,43 @@ extern "C" {
 //#define UTILISATION_INT_BOUTON3
 //#define UTILISATION_INT_STATUS_BL
 
-#define PRIO_INTER_TIMER1               5   // 
+#define PRIO_INTER_TIMER1               0   // 
 #define PRIO_INTER_TIMER2               0   // 
 #define PRIO_INTER_TIMER3               0   // 
 #define PRIO_INTER_TIMER4               0   // 
-#define PRIO_INTER_TIMER5               1   // 
+#define PRIO_INTER_TIMER5               0   // 
 #define PRIO_INTER_UART1_RX             0   // USB RECEPTION
 #define PRIO_INTER_UART1_TX             0   // USB TRANSMISSION
 #define PRIO_INTER_UART2_RX             0   // BLE RECEPTION
 #define PRIO_INTER_UART2_TX             0   // BLE TRANSMISSION
 #define PRIO_INTER_INT0                 0   // INT0 : SATUS BL
-#define PRIO_INTER_INT1                 6   // INT1 : CAPTEUR
-#define PRIO_INTER_INT2                 0   // INT2 : BOUTON X
+#define PRIO_INTER_INT1                 0   // INT1 : CAPTEUR
+#define PRIO_INTER_INT2                 7   // INT2 : BOUTON X
 #define PRIO_INTER_I2C_MAITRE           0   // I²C désactivé pour le moment
 #define PRIO_INTER_I2C_ESCLAVE          0   // I²C désactivé pour le moment
-#define PRIO_INTER_QEI                  7   // CODEUR : prio la plus haute
+#define PRIO_INTER_QEI                  0   // CODEUR : prio la plus haute
 
-#define ACTIV_INTER_TIMER1              1   // Timer asserv 
+#define ACTIV_INTER_TIMER1              0   // Timer asserv 
 #define ACTIV_INTER_TIMER2              0   // Timer
 #define ACTIV_INTER_TIMER3              0   // Timer 
 #define ACTIV_INTER_TIMER4              0   // Timer 
-#define ACTIV_INTER_TIMER5              1   // Timer 
+#define ACTIV_INTER_TIMER5              0   // Timer 
 #define ACTIV_INTER_UART1_RX            0   // UART USB : 
 #define ACTIV_INTER_UART1_TX            0   // UART USB : type inter
 #define ACTIV_INTER_UART2_RX            0   // UART BLE 
 #define ACTIV_INTER_UART2_TX            0   // UART BLE : type inter
 #define ACTIV_INTER_INT0                0   // INT0 : STATUS BL
-#define ACTIV_INTER_INT1                1   // INT1 : CAPTEUR
-#define ACTIV_INTER_INT2                0   // INT2 : BOUTON X
+#define ACTIV_INTER_INT1                0   // INT1 : CAPTEUR
+#define ACTIV_INTER_INT2                1   // INT2 : BOUTON X
 #define ACTIV_INTER_I2C_MAITRE          0   // Pas implémenté pour le moment
 #define ACTIV_INTER_I2C_ESCLAVE         0   // Pas implémenté pour le moment
-#define ACTIV_INTER_QEI                 1   // CODEUR
+#define ACTIV_INTER_QEI                 0   // CODEUR
 
 
 /******************************************************************************/
 /*************************** Variables Globales *******************************/
 /******************************************************************************/
 
-    extern volatile int8_t OVERFLOW_CODEUR;
-    extern volatile _position position ;
-    extern volatile _PID PID;
-    extern volatile _systeme_asserv VITESSE;
-    extern volatile _erreur ERREUR;
-    extern volatile double COMMANDE;
-    extern volatile double ORIENTATION;
-    extern volatile _capteur capteur;
-    
 
 /******************************************************************************/
 /****************************** Prototypes ************************************/
