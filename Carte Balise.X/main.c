@@ -85,24 +85,7 @@ int main(int argc, char** argv)
     
     while(1)
     {
-        
-        LED1 = 1;
-        envoit_pwm(0);
-        delay_ms(6000);
-        LED1 = 0;
-        envoit_pwm(100);
-        delay_ms(6000);
-        
-        
-        /*envoit_pwm(0);
-        LED1 = 0;
-        delay_ms(3000);
-        LED1 = 1;
-        envoit_pwm(100);
-        delay_ms(3000);*/
-        
-        
-        /*if (BOUTON1 == 1)
+        if (BOUTON1 == 1)
         {
             LED1 = 0;
             envoit_pwm(0);
@@ -111,7 +94,7 @@ int main(int argc, char** argv)
         {
             LED1 = 1;
             envoit_pwm(100);
-        }*/
+        }
     }
     
     while(1);

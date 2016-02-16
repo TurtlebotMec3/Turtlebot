@@ -25,10 +25,59 @@ void init_system (void)
     ConfigPorts();
     ConfigInterrupt();
     ConfigPWM();
-    //config_timer_5ms();
+    config_energie();
 }
 
+/******************************************************************************/
+/************************* Gestion des modules actifs *************************/
+/******************************************************************************/
 
+/**
+ * Desactivation de tous les modules innutiles pour réduire la consommation
+ *      1 = DESACTIVE
+ *      0 = ACTIVE (par défaut)
+ */
+void config_energie (void)
+{
+
+    // PMD1
+    PMD1bits.T5MD                   = 1;    // TIMER 5  : DESACTIVE
+    PMD1bits.T4MD                   = 1;    // TIMER 4  : DESACTIVE   
+    PMD1bits.T3MD                   = 1;    // TIMER 3  : DESACTIVE
+    PMD1bits.T2MD                   = 1;    // TIMER 2  : DESACTIVE
+    PMD1bits.T1MD                   = 1;    // TIMER 1  : DESACTIVE
+    PMD1bits.QEI1MD                 = 1;    // QEI 1    : DESACTIVE
+    PMD1bits.PWM1MD                 = 1;    // PWM 1    : DESACTIVE
+    PMD1bits.I2C1MD                 = 1;    // I²C 1    : DESACTIVE
+    PMD1bits.U2MD                   = 1;    // UART 2   : DESACTIVE
+    PMD1bits.U1MD                   = 1;    // UART 1   : DESACTIVE
+    PMD1bits.SPI2MD                 = 1;    // SPI 2    : DESACTIVE
+    PMD1bits.SPI1MD                 = 1;    // SPI 1    : DESACTIVE
+    PMD1bits.C1MD                   = 1;    // ECAN 1   : DESACTIVE
+    PMD1bits.AD1MD                  = 1;    // ADC 1    : DESACTIVE
+
+
+    // PMD2
+    PMD2bits.IC8MD                  = 1;    // IC 8     : DESACTIVE (Input Capture)
+    PMD2bits.IC7MD                  = 1;    // IC 7     : DESACTIVE (Input Capture)
+    PMD2bits.IC2MD                  = 1;    // IC 2     : DESACTIVE (Input Capture)
+    PMD2bits.OC4MD                  = 1;    // OC 4     : DESACTIVE (Output Compare)
+    PMD2bits.OC3MD                  = 1;    // OC 3     : DESACTIVE (Output Compare)
+    PMD2bits.OC2MD                  = 1;    // OC 2     : DESACTIVE (Output Compare)
+    PMD2bits.OC1MD                  = 1;    // OC 1     : DESACTIVE (Output Compare)
+    
+    
+    // PMD3
+    PMD3bits.CMPMD                  = 1;    // CM       : DESACTIVE (Comparator Module)
+    PMD3bits.RTCCMD                 = 1;    // RTC      : DESACTIVE (Comparator Module)
+    PMD3bits.PMPMD                  = 1;    // PMP      : DESACTIVE (Parralel Master Port)
+    PMD3bits.CRCMD                  = 1;    // CRC      : DESACTIVE 
+    PMD3bits.DAC1MD                 = 1;    // DAC 1    : DESACTIVE 
+    PMD3bits.QEI2MD                 = 1;    // QEI 2    : DESACTIVE 
+    PMD3bits.PWM2MD                 = 0;    // PWM 2    : ACTIVE !!!!!!!!!! 
+    
+
+}
 
 /******************************************************************************/
 /***************************** Configurations Timers **************************/

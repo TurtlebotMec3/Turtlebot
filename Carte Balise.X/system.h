@@ -173,6 +173,14 @@ extern "C" {
     void ConfigMapping (void);
     
     
+    /**
+    * Desactivation de tous les modules innutiles pour réduire la consommation
+    *      1 = DESACTIVE
+    *      0 = ACTIVE (par défaut)
+    */
+   void config_energie (void)
+    
+    
     void config_timer_5ms();
 
     
