@@ -1,0 +1,12 @@
+#!/bin/bash
+
+roslaunch turtlebot_bringup minimal.launch
+roslauch 
+
+
+	<node name="minimal" pkg="turtlebot_bringup" type="minimal.launch"/>
+	<node name="openni2" pkg="openni2_launch" type="openni2.launch"/>
+	<node name="soundplay" pkg="sound_play" type="soundplay_node.launch"/>
+	<node name="Cob" pkg="cob_people_detection" type="people_detection.launch"/>
+
+</launch>
