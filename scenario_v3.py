@@ -12,7 +12,7 @@ from kobuki_msgs.msg import Sound
 from kobuki_msgs.msg import DigitalOutput
 from cob_perception_msgs.msg import ColorDepthImageArray
 from cob_perception_msgs.msg import DetectionArray
-
+from sensor_msgs.msg import Image
 
 
 bumper = 3
@@ -36,6 +36,9 @@ def bumper(data):
 def image(data):
 	global NbGens
 	NbGens=len(data.detections)
+
+
+
 
 def main():
 	global bumper

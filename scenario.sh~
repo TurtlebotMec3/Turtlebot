@@ -15,4 +15,4 @@ sleep 5 ;
 read -rsp $'Appuez sur entree pour lancer le scenario\n';
 xterm -e python scenario_v2.py &
 read -rsp $'Appuez sur entree pour arreter le scenario\n';
-#killall xterm
+killall xterm
