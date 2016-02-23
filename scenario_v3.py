@@ -1,4 +1,4 @@
-#code by julieng =!=
+#code by Julieng =!=
 
 import rospy
 import random
@@ -17,6 +17,7 @@ from sensor_msgs.msg import Image
 
 bumper = 3
 NbGens = 0
+Nbmax = 0
 
 def bumper(data):
 	global bumper
@@ -35,14 +36,18 @@ def bumper(data):
 
 def image(data):
 	global NbGens
+	global Nbmax
 	NbGens=len(data.detections)
+	if NbGens>Nbmax:
+		Nbmax=NbGens
 
 
 
 
 def main():
 	global bumper
-
+	global Nbmax
+	global Nbgens
 	print("Lancement navigation aleatoire")
 	rospy.init_node('navigation_aleatoire')
 	rospy.sleep(0.5)
@@ -55,17 +60,20 @@ def main():
 	cmd = Twist()
 	sound = SoundRequest()
 	sonnerie = Sound()
+	sonnerie2 = Sound()
 	sound.arg = "/opt/ros/indigo/share/sound_play/sounds/R2D2a.wav"
 	sound.sound = -2
 	sound.command = 1
 	sonnerie.value= 6
+	sonnerie2.value= 5
 	digOut=DigitalOutput()
 	digOut.values= [False, False, False, False]
 	digOut.mask=[True, False, False, False]
 	pub4.publish(digOut)
 	rospy.sleep(0.5)
-	flag=0
-
+	flag1=0
+	flag2=0
+	print(digOut)
 
 	while not rospy.is_shutdown():
 
@@ -89,12 +97,18 @@ def main():
 				rospy.sleep(5)
 				while (NbGens>0):
 					rospy.sleep(2.5)
-					flag=1
+					flag1=1
+					if (Nbmax>1):
+						if (Nbgens>1):
+							pub3.publish(sonnerie2)
+							rospy.sleep(0.5)
 				digOut.values[0]=False
-				if flag==1:
+				if flag1==1:
+					rospy.sleep(2)
 					pub3.publish(sonnerie)
 					rospy.sleep(0.5)
-					flag=0
+					flag1=0
+					Nbmax=0
 				pub4.publish(digOut)
 				rospy.sleep(0.5)
 				cmd.linear.x = -0.2
@@ -117,7 +131,10 @@ def main():
 			if bumper == 1:
 				bumper=3
 	print("fin navigation autonome")
-	rospy.spin() #boucle infinie tant qu'on quitte pas proprement
+	digOut.values[0]=False
+	pub4.publish(digOut)
+	rospy.sleep(0.5)
+	rospy.spin()
 
 
 if __name__ == "__main__":
