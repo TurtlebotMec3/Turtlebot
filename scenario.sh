@@ -13,6 +13,6 @@ sleep 10 ;
 xterm -e roslaunch cob_people_detection people_detection.launch &
 sleep 10 ;
 read -rsp $'Appuez sur entree pour lancer le scenario\n';
-xterm -e python scenario_v3.py &
+xterm -e python scenario_v2.py &
 read -rsp $'Appuez sur entree pour arreter le scenario\n';
 killall xterm
