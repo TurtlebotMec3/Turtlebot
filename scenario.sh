@@ -10,7 +10,7 @@ sleep 5 ;
 xterm -e roslaunch sound_play soundplay_node.launch &
 #read -rsp $'Appuez sur entree pour lancer cob\n';
 sleep 5 ;
-xterm -e roslaunch cob_people_detection people_detection.launch &
+xterm -e roslaunch roslaunch facedetector_kinect.launch &
 sleep 5 ;
 read -rsp $'Appuez sur entree pour lancer le scenario\n';
 xterm -e python scenario_v2.py &
