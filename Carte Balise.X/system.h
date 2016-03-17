@@ -44,6 +44,9 @@ extern "C" {
 #define ACTIVE                  0b1
 #define DESACTIVE               0b0
     
+#define LED                     0
+#define SERVO                   1
+    
 #define FRONT_MONTANT           0
 #define FRONT_DESCENDANT        1
 
@@ -178,7 +181,7 @@ extern "C" {
     *      1 = DESACTIVE
     *      0 = ACTIVE (par défaut)
     */
-   void config_energie (void)
+   void config_energie (void);
     
     
     void config_timer_5ms();

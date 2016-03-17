@@ -13,6 +13,7 @@
 #include "system.h"
 
 
+
 /******************************************************************************/
 /************************ Configurations Bits *********************************/
 /******************************************************************************/
@@ -78,22 +79,68 @@ int main(int argc, char** argv)
     /*************************** INIT ROBOT ***********************************/
     /**************************************************************************/
 
-    uint16_t i;
-    uint16_t j=0.;
     init_system();
     delay_ms(1000);
     
+    
+    //envoit_pwm(100); //30
     while(1)
     {
-        if (BOUTON1 == 1)
+        if (BOUTON1 == 0)
         {
             LED1 = 0;
-            envoit_pwm(0);
+            P2DC1 = 2350;
+            //envoit_pwm(0);
         }
         else
         {
             LED1 = 1;
-            envoit_pwm(100);
+            P2DC1 = 1600;
+        }
+        
+        //PDC1=36850;
+        
+        if (BOUTON2 == 0 && BOUTON3 == 0)
+            envoit_pwm(0, LED);
+        else if (BOUTON2 == 1 && BOUTON3 == 0)
+            envoit_pwm(100, LED);
+        else if (BOUTON2 == 0 && BOUTON3 == 1)
+        {
+            static double valeur = 10;
+            static int8_t sens = 1;
+            if (sens == 1 && valeur < 100)
+            {
+                valeur +=0.005;
+                envoit_pwm(valeur, LED);
+                if (valeur >= 100)
+                    sens = -1;
+            }
+            else
+            {
+                valeur -=0.005;
+                envoit_pwm(valeur, LED);
+                if (valeur <= 10)
+                    sens = 1;
+            }
+        }
+        else if (BOUTON2 == 1 && BOUTON3 == 1)
+        {
+            static double valeur = 5;
+            static int8_t sens = 1;
+            if (sens == 1 && valeur < 100)
+            {
+                valeur +=0.05;
+                envoit_pwm(valeur, LED);
+                if (valeur >= 100)
+                    sens = -1;
+            }
+            else
+            {
+                valeur -=0.05;
+                envoit_pwm(valeur, LED);
+                if (valeur <= 5)
+                    sens = 1;
+            }
         }
     }
     

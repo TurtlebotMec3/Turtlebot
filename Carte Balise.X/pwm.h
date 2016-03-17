@@ -27,6 +27,7 @@ extern "C" {
 /******************************************************************************/
 
 #define PWM_MAX_VALUE           36850u
+#define PWM_MAX_LED             2046u
 
 /******************************************************************************/
 /****************************** Prototypes ************************************/
@@ -34,7 +35,7 @@ extern "C" {
 
 
     void ConfigPWM (void);
-    void envoit_pwm (double valeur);
+    void envoit_pwm (double valeur, uint8_t module);
     void controle_LED1 (uint16_t pourcentage);
 
 #ifdef CARTE_V2

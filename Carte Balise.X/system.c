@@ -14,6 +14,8 @@
 #include "system.h"
 
 
+
+
 /******************************************************************************/
 /******************************************************************************/
 /******************************************************************************/
@@ -47,7 +49,7 @@ void config_energie (void)
     PMD1bits.T2MD                   = 1;    // TIMER 2  : DESACTIVE
     PMD1bits.T1MD                   = 1;    // TIMER 1  : DESACTIVE
     PMD1bits.QEI1MD                 = 1;    // QEI 1    : DESACTIVE
-    PMD1bits.PWM1MD                 = 1;    // PWM 1    : DESACTIVE
+    PMD1bits.PWM1MD                 = 0;    // PWM 1    : ACTIVE !!!!!
     PMD1bits.I2C1MD                 = 1;    // I²C 1    : DESACTIVE
     PMD1bits.U2MD                   = 1;    // UART 2   : DESACTIVE
     PMD1bits.U1MD                   = 1;    // UART 1   : DESACTIVE
@@ -179,7 +181,7 @@ void ConfigPorts (void)
 	_TRISB11	= 0;	_CN15IE	= 0;	_CN15PUE	= 0;	// RES : PGC
 	_TRISB12	= 0;	_CN14IE	= 0;	_CN14PUE	= 0;	// OUT : (DIGIT) LED1
 	_TRISB13	= 0;	_CN13IE	= 0;	_CN13PUE	= 0;	// OUT : TX USB
-	_TRISB14	= 1;	_CN12IE	= 0;	_CN12PUE	= 0;	// IN  : RX USB
+	_TRISB14	= 1;	_CN12IE	= 0;	_CN12PUE	= 0;	// OUT  : RX USB
 	_TRISB15	= 0;	_CN11IE	= 0;	_CN11PUE	= 0;	// OUT : (PWM) PWM Moteur
 
 	// Config PORTC
@@ -189,10 +191,10 @@ void ConfigPorts (void)
 	_TRISC3		= 0;	_CN28IE	= 0;	_CN28PUE	= 0;	// NC
 	_TRISC4		= 1;	_CN25IE	= 0;	_CN25PUE	= 0;	// IN  : QEA
 	_TRISC5		= 1;	_CN26IE	= 0;	_CN26PUE	= 0;	// IN  : QEB
-	_TRISC6		= 0;	_CN18IE	= 0;	_CN18PUE	= 0;	// OUT : (DIGIT) : ENABLE BL
-	_TRISC7		= 0;	_CN17IE	= 0;	_CN17PUE	= 0;	// OUT  : BOUTON3 = pwm servo
-	_TRISC8		= 1;	_CN20IE	= 0;	_CN20PUE	= 0;	// IN  : BOUTON2
-	_TRISC9		= 1;	_CN19IE	= 0;	_CN19PUE	= 0;	// IN  : BOUTON1
+	_TRISC6		= 0;	_CN18IE	= 0;	_CN18PUE	= 0;	// OUT : (DIGIT) : ENABLE BL = pwm servo
+	_TRISC7		= 1;	_CN17IE	= 0;	_CN17PUE	= 0;	// IN  : BOUTON3 = input led2
+	_TRISC8		= 1;	_CN20IE	= 0;	_CN20PUE	= 0;	// IN  : BOUTON2 = input led1
+	_TRISC9		= 1;	_CN19IE	= 0;	_CN19PUE	= 0;	// IN  : BOUTON1 = input servo
 
 
 	//****************
@@ -489,17 +491,3 @@ void ConfigInterrupt (void)
 /******************************************************************************/
 /**************************** Configurations   ADC ****************************/
 /******************************************************************************/
-
-
-void ConfigADC (void)
-{
-      
-}
-
-
-void config_i2c ()
-{
-    
-    
-    
-}
