@@ -126,7 +126,7 @@ int main(int argc, char** argv)
                     sens = 1;
             }
         }
-        else if (BOUTON2 == 1 && BOUTON3 == 1)
+        else if (BOUTON2 == 1 && BOUTON3 == 0)
         {
             //BLINK_FAST
             static double valeur = 5;
