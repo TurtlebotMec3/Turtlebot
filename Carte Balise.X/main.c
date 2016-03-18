@@ -101,11 +101,14 @@ int main(int argc, char** argv)
         //PDC1=36850;
         
         if (BOUTON2 == 0 && BOUTON3 == 0)
+            // MODE OFF
             envoit_pwm(0, LED);
-        else if (BOUTON2 == 1 && BOUTON3 == 0)
+        else if (BOUTON2 == 1 && BOUTON3 == 1)
+            // MODE ON
             envoit_pwm(100, LED);
         else if (BOUTON2 == 0 && BOUTON3 == 1)
         {
+            // BLINK_SLOW
             static double valeur = 10;
             static int8_t sens = 1;
             if (sens == 1 && valeur < 100)
@@ -125,6 +128,7 @@ int main(int argc, char** argv)
         }
         else if (BOUTON2 == 1 && BOUTON3 == 1)
         {
+            //BLINK_FAST
             static double valeur = 5;
             static int8_t sens = 1;
             if (sens == 1 && valeur < 100)
