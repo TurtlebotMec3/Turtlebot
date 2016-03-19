@@ -83,20 +83,20 @@ Program Memory  [Origin = 0x200, Length = 0x15600]
 section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200               0x370           0x528  (1320)
-.text                        0x570               0x72a           0xabf  (2751)
-.init.delay32                0xc9a                0x1c            0x2a  (42)
-.dinit                       0xcb6                0x10            0x18  (24)
+.text                        0x570               0x830           0xc48  (3144)
+.init.delay32                0xda0                0x1c            0x2a  (42)
+.dinit                       0xdbc                0x14            0x1e  (30)
 
-                     Total program memory used (bytes):         0x1029  (4137) 3%
+                     Total program memory used (bytes):         0x11b8  (4536) 3%
 
 
 Data Memory  [Origin = 0x800, Length = 0x4000]
 
 section                    address      alignment gaps    total length  (dec)
 -------                    -------      --------------    -------------------
-.ndata                       0x800                   0             0xc  (12)
+.ndata                       0x800                   0            0x12  (18)
 
-                        Total data memory used (bytes):            0xc  (12) <1%
+                        Total data memory used (bytes):           0x12  (18) <1%
 
 
 Dynamic Memory Usage
@@ -104,9 +104,9 @@ Dynamic Memory Usage
 region                     address                      maximum length  (dec)
 ------                     -------                      ---------------------
 heap                             0                                   0  (0)
-stack                        0x80c                              0x3ff4  (16372)
+stack                        0x812                              0x3fee  (16366)
 
-                        Maximum dynamic memory (bytes):         0x3ff4  (16372)
+                        Maximum dynamic memory (bytes):         0x3fee  (16366)
 
 
 External Symbols in Program Memory (by address):
@@ -142,21 +142,21 @@ External Symbols in Program Memory (by address):
                   0x0005e8                  _ConfigPorts
                   0x000710                  _ConfigInterrupt
                   0x0009f8                  _main
-                  0x000b90                  _ConfigPWM
-                  0x000bfa                  _envoit_pwm
-                  0x000c9a                  ___delay32
+                  0x000c96                  _ConfigPWM
+                  0x000d00                  _envoit_pwm
+                  0x000da0                  ___delay32
 
 External Symbols in Program Memory (by name):
 
                   0x000710                  _ConfigInterrupt
                   0x0005dc                  _ConfigMapping
-                  0x000b90                  _ConfigPWM
+                  0x000c96                  _ConfigPWM
                   0x0005e8                  _ConfigPorts
                   0x0002aa                  __DefaultInterrupt
                   0x0002a2                  __INT2Interrupt
                   0x00029a                  __T1Interrupt
                   0x0002b0                  ___addsf3
-                  0x000c9a                  ___delay32
+                  0x000da0                  ___delay32
                   0x00036a                  ___divsf3
                   0x0003ee                  ___eqsf2
                   0x0003f6                  ___fixunssfsi
@@ -179,7 +179,7 @@ External Symbols in Program Memory (by name):
                   0x000200                  __resetPRI
                   0x000580                  _config_energie
                   0x0005be                  _config_timer_5ms
-                  0x000bfa                  _envoit_pwm
+                  0x000d00                  _envoit_pwm
                   0x000570                  _init_system
                   0x0009f8                  _main
 
@@ -343,27 +343,27 @@ __FUID3
 .comment
  *(.comment)
 
-.debug_info       0x000000       0x4e2c
+.debug_info       0x000000       0x4e57
  *(.debug_info)
- .debug_info      0x000000        0x4a8 build/default/production/main.o
- .debug_info      0x0004a8       0x3de5 build/default/production/system.o
- .debug_info      0x00428d        0x4a6 build/default/production/interruptions.o
- .debug_info      0x004733        0x6f9 build/default/production/pwm.o
+ .debug_info      0x000000        0x4d3 build/default/production/main.o
+ .debug_info      0x0004d3       0x3de5 build/default/production/system.o
+ .debug_info      0x0042b8        0x4a6 build/default/production/interruptions.o
+ .debug_info      0x00475e        0x6f9 build/default/production/pwm.o
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev     0x000000        0x35b
+.debug_abbrev     0x000000        0x36a
  *(.debug_abbrev)
- .debug_abbrev    0x000000         0xda build/default/production/main.o
- .debug_abbrev    0x0000da         0xef build/default/production/system.o
- .debug_abbrev    0x0001c9         0xa7 build/default/production/interruptions.o
- .debug_abbrev    0x000270         0xeb build/default/production/pwm.o
+ .debug_abbrev    0x000000         0xe9 build/default/production/main.o
+ .debug_abbrev    0x0000e9         0xef build/default/production/system.o
+ .debug_abbrev    0x0001d8         0xa7 build/default/production/interruptions.o
+ .debug_abbrev    0x00027f         0xeb build/default/production/pwm.o
 
-.debug_line       0x000000        0xf79
+.debug_line       0x000000       0x103c
  *(.debug_line)
- .debug_line      0x000000        0x219 build/default/production/main.o
- .debug_line      0x000219        0xa2f build/default/production/system.o
- .debug_line      0x000c48         0xdb build/default/production/interruptions.o
- .debug_line      0x000d23        0x256 build/default/production/pwm.o
+ .debug_line      0x000000        0x2dc build/default/production/main.o
+ .debug_line      0x0002dc        0xa2f build/default/production/system.o
+ .debug_line      0x000d0b         0xdb build/default/production/interruptions.o
+ .debug_line      0x000de6        0x256 build/default/production/pwm.o
 
 .debug_frame      0x000000        0x100
  *(.debug_frame)
@@ -372,12 +372,12 @@ __FUID3
  .debug_frame     0x000098         0x34 build/default/production/interruptions.o
  .debug_frame     0x0000cc         0x34 build/default/production/pwm.o
 
-.debug_str        0x000000        0x207
+.debug_str        0x000000        0x20e
  *(.debug_str)
- .debug_str       0x000000         0x13 build/default/production/main.o
- .debug_str       0x000013        0x1b2 build/default/production/system.o
- .debug_str       0x0001c5         0x12 build/default/production/interruptions.o
- .debug_str       0x0001d7         0x30 build/default/production/pwm.o
+ .debug_str       0x000000         0x1a build/default/production/main.o
+ .debug_str       0x00001a        0x1b2 build/default/production/system.o
+ .debug_str       0x0001cc         0x12 build/default/production/interruptions.o
+ .debug_str       0x0001de         0x30 build/default/production/pwm.o
 
 .debug_loc
  *(.debug_loc)
@@ -1832,8 +1832,8 @@ __c30_signature
  __c30_signature
                   0x000787          0x6 c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\libm-elf.a(fcompare.eo)
 
-.ndata              0x0800          0xc
- .ndata             0x0800          0xc build/default/production/main.o
+.ndata              0x0800         0x12
+ .ndata             0x0800         0x12 build/default/production/main.o
 
 .config_JTAGEN    0xf8000e          0x2
  .config_JTAGEN
@@ -1862,7 +1862,7 @@ __c30_signature
 .config_RBS       0xf80000          0x2
  .config_RBS      0xf80000          0x2 build/default/production/main.o
 
-.text             0x000570        0x72a
+.text             0x000570        0x830
  .text            0x000570        0x488 build/default/production/system.o
                   0x000570                  _init_system
                   0x000580                  _config_energie
@@ -1870,15 +1870,15 @@ __c30_signature
                   0x0005dc                  _ConfigMapping
                   0x0005e8                  _ConfigPorts
                   0x000710                  _ConfigInterrupt
- .text            0x0009f8        0x198 build/default/production/main.o
+ .text            0x0009f8        0x29e build/default/production/main.o
                   0x0009f8                  _main
- .text            0x000b90        0x10a build/default/production/pwm.o
-                  0x000b90                  _ConfigPWM
-                  0x000bfa                  _envoit_pwm
+ .text            0x000c96        0x10a build/default/production/pwm.o
+                  0x000c96                  _ConfigPWM
+                  0x000d00                  _envoit_pwm
 
-.init.delay32     0x000c9a         0x1c
- .init.delay32    0x000c9a         0x1c c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\liblega-pic30-elf.a(delay32.Leo)
-                  0x000c9a                  ___delay32
+.init.delay32     0x000da0         0x1c
+ .init.delay32    0x000da0         0x1c c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\liblega-pic30-elf.a(delay32.Leo)
+                  0x000da0                  ___delay32
 
-.dinit            0x000cb6         0x10
- .dinit           0x000cb6         0x10 data_init
+.dinit            0x000dbc         0x14
+ .dinit           0x000dbc         0x14 data_init

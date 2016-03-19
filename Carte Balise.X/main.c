@@ -105,11 +105,54 @@ int main(int argc, char** argv)
             envoit_pwm(0, LED);
         else if (BOUTON2 == 1 && BOUTON3 == 1)
             // MODE ON
-            envoit_pwm(100, LED);
+            //envoit_pwm(100, LED);
+        {
+            static double valeur = 10;
+            static int8_t sens = 1;
+            
+            if (sens == 0)
+            {
+                valeur+=0.006;
+                if (valeur >= 100)
+                {
+                    sens = 1;
+                    valeur = 10;    
+                        
+                }
+            }
+            else if (sens == 1)
+            {
+                valeur+=0.01;
+                envoit_pwm(valeur, LED);
+                if (valeur >= 100)
+                    sens = 2;
+            }
+            else if (sens == 2)
+            {
+                valeur -=0.01;
+                envoit_pwm(valeur, LED);
+                if (valeur <= 30)
+                    sens = 3;
+            }
+            else if (sens == 3)
+            {
+                valeur +=0.01;
+                envoit_pwm(valeur, LED);
+                if (valeur >= 100)
+                    sens = 4;
+            }       
+            else 
+            {
+                valeur -= 0.008;
+                envoit_pwm(valeur, LED);
+                if (valeur <= 10)
+                    sens = 0;
+            }
+        }
         else if (BOUTON2 == 0 && BOUTON3 == 1)
         {
             // BLINK_SLOW
-            static double valeur = 10;
+            static double valeur = 5;
             static int8_t sens = 1;
             if (sens == 1 && valeur < 100)
             {
@@ -122,9 +165,11 @@ int main(int argc, char** argv)
             {
                 valeur -=0.005;
                 envoit_pwm(valeur, LED);
-                if (valeur <= 10)
+                if (valeur <= 5)
                     sens = 1;
             }
+                   
+            
         }
         else if (BOUTON2 == 1 && BOUTON3 == 0)
         {
