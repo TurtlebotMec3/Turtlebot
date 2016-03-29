@@ -100,12 +100,12 @@ int main(int argc, char** argv)
         
         //PDC1=36850;
         
-        if (BOUTON2 == 0 && BOUTON3 == 0)
-            // MODE OFF
+        if (BOUTON2 == 0 && BOUTON3 == 0 && BOUTON4 == 0)
+        {    // MODE OFF
             envoit_pwm(0, LED);
-        else if (BOUTON2 == 1 && BOUTON3 == 1)
-            // MODE ON
-            //envoit_pwm(100, LED);
+        }
+        else if (BOUTON2 == 1 && BOUTON3 == 1 && BOUTON4 == 0)
+            // MODE ALIVE
         {
             static double valeur = 10;
             static int8_t sens = 1;
@@ -149,7 +149,7 @@ int main(int argc, char** argv)
                     sens = 0;
             }
         }
-        else if (BOUTON2 == 0 && BOUTON3 == 1)
+        else if (BOUTON2 == 0 && BOUTON3 == 1 && BOUTON4 == 0)
         {
             // BLINK_SLOW
             static double valeur = 5;
@@ -167,11 +167,9 @@ int main(int argc, char** argv)
                 envoit_pwm(valeur, LED);
                 if (valeur <= 5)
                     sens = 1;
-            }
-                   
-            
+            }    
         }
-        else if (BOUTON2 == 1 && BOUTON3 == 0)
+        else if (BOUTON2 == 1 && BOUTON3 == 0 && BOUTON4 == 0)
         {
             //BLINK_FAST
             static double valeur = 5;
@@ -191,6 +189,80 @@ int main(int argc, char** argv)
                     sens = 1;
             }
         }
+        else if (BOUTON2 == 0 && BOUTON3 == 0 && BOUTON4 == 1)
+        {
+            //Led rouge = ON
+            envoit_pwm(0, LED);
+            envoit_pwm(100, LED_ROUGE);
+        }
+        else if (BOUTON2 == 0 && BOUTON3 == 1 && BOUTON4 == 1)
+        {
+            //LED ROUGE BLINK SLOW
+            static double valeur = 5;
+            static int8_t sens = 1;
+            
+            envoit_pwm(0, LED);
+            
+            if (sens == 1 && valeur < 100)
+            {
+                valeur +=0.005;
+                envoit_pwm(valeur, LED_ROUGE);
+                if (valeur >= 100)
+                    sens = -1;
+            }
+            else
+            {
+                valeur -=0.005;
+                envoit_pwm(valeur, LED_ROUGE);
+                if (valeur <= 5)
+                    sens = 1;
+            }
+        }
+        else if (BOUTON2 == 1 && BOUTON3 == 0 && BOUTON4 == 1)
+        {
+            // LED ROUGE BLINK FAST
+            envoit_pwm(0, LED);
+            
+            static double valeur = 5;
+            static int8_t sens = 1;
+            if (sens == 1 && valeur < 100)
+            {
+                valeur +=0.05;
+                envoit_pwm(valeur, LED_ROUGE);
+                if (valeur >= 100)
+                    sens = -1;
+            }
+            else
+            {
+                valeur -=0.05;
+                envoit_pwm(valeur, LED_ROUGE);
+                if (valeur <= 5)
+                    sens = 1;
+            }
+        }
+        else if (BOUTON2 == 1 && BOUTON3 == 1 && BOUTON4 == 1)
+        {
+            // LED BLEU et ROUGE
+            envoit_pwm(100, LED_ROUGE);
+            static double valeur = 5;
+            static int8_t sens = 1;
+            if (sens == 1 && valeur < 100)
+            {
+                valeur +=0.05;
+                envoit_pwm(valeur, LED);
+                if (valeur >= 100)
+                    sens = -1;
+            }
+            else
+            {
+                valeur -=0.05;
+                envoit_pwm(valeur, LED);
+                if (valeur <= 5)
+                    sens = 1;
+            }
+        }
+        
+        
     }
     
     while(1);

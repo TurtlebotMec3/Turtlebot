@@ -46,6 +46,7 @@ extern "C" {
     
 #define LED                     0
 #define SERVO                   1
+#define LED_ROUGE               2
     
 #define FRONT_MONTANT           0
 #define FRONT_DESCENDANT        1
@@ -67,6 +68,7 @@ extern "C" {
 #define BOUTON1             PORTCbits.RC9
 #define BOUTON2             PORTCbits.RC8
 #define BOUTON3             PORTCbits.RC7
+#define BOUTON4             PORTBbits.RB6
     
 #define SENS_MOTEUR         PORTCbits.RC0
 

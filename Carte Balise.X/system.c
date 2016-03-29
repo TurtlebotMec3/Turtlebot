@@ -172,8 +172,8 @@ void ConfigPorts (void)
 	_TRISB2		= 0;	_CN6IE	= 0;	_CN6PUE		= 0;	// OUT : (DIGIT) LED8
 	_TRISB3		= 0;	_CN7IE	= 0;	_CN7PUE		= 0;	// OUT : (DIGIT) LED9
 	_TRISB4		= 0;	_CN1IE	= 0;	_CN1PUE		= 0;	// NC
-	_TRISB5		= 0;	_CN27IE	= 0;	_CN27PUE	= 0;	// OUT : SDA
-	_TRISB6		= 1;	_CN24IE	= 0;	_CN24PUE	= 0;	// IN  : SCL
+	_TRISB5		= 1;	_CN27IE	= 0;	_CN27PUE	= 0;	// IN : SDA = BOUTON4
+	_TRISB6		= 1;	_CN24IE	= 0;	_CN24PUE	= 0;	// IN  : SCL = BOUTON4
 	_TRISB7		= 1;	_CN23IE	= 0;	_CN23PUE	= 0;	// IN  : (DIGIT) Status BL
 	_TRISB8		= 0;	_CN22IE	= 0;	_CN22PUE	= 0;	// OUT : TX BL
 	_TRISB9		= 1;	_CN21IE	= 0;	_CN21PUE	= 0;	// IN  : RX BL
@@ -181,7 +181,7 @@ void ConfigPorts (void)
 	_TRISB11	= 0;	_CN15IE	= 0;	_CN15PUE	= 0;	// RES : PGC
 	_TRISB12	= 0;	_CN14IE	= 0;	_CN14PUE	= 0;	// OUT : (DIGIT) LED1
 	_TRISB13	= 0;	_CN13IE	= 0;	_CN13PUE	= 0;	// OUT : TX USB
-	_TRISB14	= 1;	_CN12IE	= 0;	_CN12PUE	= 0;	// OUT  : RX USB
+	_TRISB14	= 0;	_CN12IE	= 0;	_CN12PUE	= 0;	// OUT  : RX USB
 	_TRISB15	= 0;	_CN11IE	= 0;	_CN11PUE	= 0;	// OUT : (PWM) PWM Moteur
 
 	// Config PORTC

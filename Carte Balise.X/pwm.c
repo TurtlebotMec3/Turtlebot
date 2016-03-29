@@ -54,7 +54,7 @@ void ConfigPWM (void)
     PWM1CON1bits.PEN1H	= 1;		//PWM1H1 pour led bleu du turtlebot
 	PWM1CON1bits.PEN1L	= 0;		//PWM1L1 inactif => I/O
 	PWM1CON1bits.PEN2H	= 0;		//PWM1H2 pour PWM_GAUCHE
-	PWM1CON1bits.PEN2L	= 0;		//PWM1L2 inactif => I/O
+	PWM1CON1bits.PEN2L	= 1;		//PWM1L2 pour led rouge du turtlebot
 	PWM1CON1bits.PEN3H	= 0;		//PWM1H3 pour pour PWM_DROIT
 	PWM1CON1bits.PEN3L	= 0;		//PWM1L3 inactif => I/O
     
@@ -103,6 +103,11 @@ void envoit_pwm (double valeur, uint8_t module)
     {
         valeur *= PWM_MAX_LED / 100;
         PDC1 = (uint16_t) valeur;
+    }
+    else if (module == LED_ROUGE)
+    {
+        valeur *= PWM_MAX_LED / 100;
+        PDC2 = (uint16_t) valeur;
     }
 }
 
