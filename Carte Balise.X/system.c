@@ -172,7 +172,7 @@ void ConfigPorts (void)
 	_TRISB2		= 0;	_CN6IE	= 0;	_CN6PUE		= 0;	// OUT : (DIGIT) LED8
 	_TRISB3		= 0;	_CN7IE	= 0;	_CN7PUE		= 0;	// OUT : (DIGIT) LED9
 	_TRISB4		= 0;	_CN1IE	= 0;	_CN1PUE		= 0;	// NC
-	_TRISB5		= 1;	_CN27IE	= 0;	_CN27PUE	= 0;	// IN : SDA = BOUTON4
+	_TRISB5		= 1;	_CN27IE	= 0;	_CN27PUE	= 0;	// IN : SDA = PWM
 	_TRISB6		= 1;	_CN24IE	= 0;	_CN24PUE	= 0;	// IN  : SCL = BOUTON4
 	_TRISB7		= 1;	_CN23IE	= 0;	_CN23PUE	= 0;	// IN  : (DIGIT) Status BL
 	_TRISB8		= 0;	_CN22IE	= 0;	_CN22PUE	= 0;	// OUT : TX BL

@@ -52,7 +52,7 @@
 
 // FPOR
 #pragma config FPWRT = PWR128           // POR Timer Value (128ms)
-#pragma config ALTI2C = ON              // Alternate I2C  pins (I2C mapped to ASDA1/ASCL1 pins)
+#pragma config ALTI2C = OFF              // Alternate I2C  pins (I2C mapped to ASDA1/ASCL1 pins)
 #pragma config LPOL = ON                // Motor Control PWM Low Side Polarity bit (PWM module low side output pins have active-high output polarity)
 #pragma config HPOL = ON                // Motor Control PWM High Side Polarity bit (PWM module high side output pins have active-high output polarity)
 #pragma config PWMPIN = ON              // Motor Control PWM Module Pin Mode bit (PWM module pins controlled by PORT register at device Reset)
@@ -103,23 +103,27 @@ int main(int argc, char** argv)
         if (BOUTON2 == 0 && BOUTON3 == 0 && BOUTON4 == 0)
         {    // MODE OFF
             envoit_pwm(0, LED);
+            envoit_pwm(0, LED_ROUGE);
         }
         else if (BOUTON2 == 1 && BOUTON3 == 1 && BOUTON4 == 0)
             // MODE ALIVE
         {
-            static double valeur = 10;
+            envoit_pwm(0, LED_ROUGE);
+            static double valeur = 10, valeur2 = 10;
             static int8_t sens = 1;
             
+            // tempo
             if (sens == 0)
             {
-                valeur+=0.006;
-                if (valeur >= 100)
+                valeur2+=0.006;
+                if (valeur2 >= 100)
                 {
                     sens = 1;
-                    valeur = 10;    
+                    valeur2 = 10;    
                         
                 }
             }
+            //augmentation lumière
             else if (sens == 1)
             {
                 valeur+=0.01;
@@ -127,6 +131,7 @@ int main(int argc, char** argv)
                 if (valeur >= 100)
                     sens = 2;
             }
+            //petite décrémenation
             else if (sens == 2)
             {
                 valeur -=0.01;
@@ -134,13 +139,15 @@ int main(int argc, char** argv)
                 if (valeur <= 30)
                     sens = 3;
             }
+            //petite augmentation
             else if (sens == 3)
             {
                 valeur +=0.01;
                 envoit_pwm(valeur, LED);
                 if (valeur >= 100)
                     sens = 4;
-            }       
+            }    
+            // grande décrémentayion
             else 
             {
                 valeur -= 0.008;
@@ -154,6 +161,9 @@ int main(int argc, char** argv)
             // BLINK_SLOW
             static double valeur = 5;
             static int8_t sens = 1;
+            
+            envoit_pwm(0, LED_ROUGE);
+            
             if (sens == 1 && valeur < 100)
             {
                 valeur +=0.005;
@@ -174,6 +184,9 @@ int main(int argc, char** argv)
             //BLINK_FAST
             static double valeur = 5;
             static int8_t sens = 1;
+            
+            envoit_pwm(0, LED_ROUGE);
+            
             if (sens == 1 && valeur < 100)
             {
                 valeur +=0.05;
@@ -243,23 +256,63 @@ int main(int argc, char** argv)
         else if (BOUTON2 == 1 && BOUTON3 == 1 && BOUTON4 == 1)
         {
             // LED BLEU et ROUGE
-            envoit_pwm(100, LED_ROUGE);
-            static double valeur = 5;
+            static double valeur = 5, valeur2 =100;
             static int8_t sens = 1;
-            if (sens == 1 && valeur < 100)
+             
+            // augmentation de l'éclairage bleu (rouge présent)
+            if (sens == 1 && valeur < 50)
             {
-                valeur +=0.05;
+                valeur +=0.01;
                 envoit_pwm(valeur, LED);
-                if (valeur >= 100)
+                envoit_pwm(100, LED_ROUGE);
+                if (valeur >= 50)
+                    sens = 0;
+            }
+            // On baisse le rouge pour être 100% bleu
+            else if (sens == 0)
+            {
+                valeur2 -=0.02;
+                envoit_pwm(valeur2, LED_ROUGE);
+                if(valeur2 < 5)
+                    sens = 3;
+            }
+            // Petite pause pour bien voir le bleu pure
+            else if (sens == 3)
+            {
+                valeur2 += 0.005;
+                if (valeur2 >= 15)
+                {
+                    valeur2 = 5;
+                    sens = 4;
+                }
+            }
+            // On remonte le rouge à 100%
+            else if (sens == 4)
+            {
+                valeur2 +=0.02;
+                envoit_pwm(valeur2, LED_ROUGE);
+                if (valeur2 >= 100)
                     sens = -1;
             }
-            else
+            // On supprime la lumière bleu pour être rouge pure
+            else if (sens == -1)
             {
-                valeur -=0.05;
+                valeur -=0.01;
                 envoit_pwm(valeur, LED);
-                if (valeur <= 5)
-                    sens = 1;
+                if (valeur <= 0.2)
+                    sens = 2;
             }
+            // petite pause rouge pure
+            else if (sens == 2)
+            {
+                valeur += 0.005;
+                if (valeur >= 15)
+                {
+                    valeur = 0.2;
+                    sens = 1;
+                }
+            }
+            
         }
         
         
